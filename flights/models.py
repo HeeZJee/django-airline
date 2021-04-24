@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
+from django.db.models.fields import CharField
 
 # Create your models here.
 class Airport(models.Model):
@@ -16,3 +17,11 @@ class Flight(models.Model):
 
     def __str__(self):
         return f"{self.id}: {self.origin} to {self.destination}"
+
+class Passenger(models.Model):
+    first = models.CharField(max_length=64)
+    last = models.CharField(max_length=64)
+    flights = models.ManyToManyField(Flight,blank=True,related_name="passengers")
+
+    def __str__(self):
+        return f"{self.first} {self.last}"
